@@ -37,8 +37,38 @@ function filterByPrice(min, max) {
     return products.filter(product => product.price >= min && product.price <= max).sort((a, b) => b.price - a.price);
 }
 
+function addNewProduct(id, description, price) {
+    const newProduct = {
+        id,
+        description,
+        price,
+        reviews: []
+    };
+    products.push(newProduct);
+    return newProduct;
+}
+
+function addNewProductReview(rating, comment, id) {
+    const product = getProductById(id);
+    if (!product) {
+        console.error("Product does not exist");
+        return;
+    };
+    let review = {}
+    if (comment) {
+        review = {rating, comment};
+        product.reviews.push(review);
+    } else {
+        review = {rating};
+        product.reviews.push(review)
+    }
+    return review;
+}
+
 module.exports = {
     getAllProducts,
     getProductById,
-    filterByPrice
+    filterByPrice,
+    addNewProduct,
+    addNewProductReview
 }
